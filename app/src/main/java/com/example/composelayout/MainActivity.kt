@@ -28,6 +28,7 @@ import androidx.compose.ui.layout.FirstBaseline
 import androidx.compose.ui.layout.Layout
 import androidx.compose.ui.layout.layout
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -68,9 +69,9 @@ fun LayoutsCodelab() {
             .padding(innerPadding)
             .padding(8.dp))
 
-        BodyContentCustomLayout(Modifier
-            .padding(innerPadding)
-            .padding(8.dp))
+//        BodyContentCustomLayout(Modifier
+//            .padding(innerPadding)
+//            .padding(8.dp))
     }
 }
 
@@ -78,7 +79,7 @@ fun LayoutsCodelab() {
     Custom Layout
  */
 @Preview(showBackground = true, backgroundColor = 0xFFFFFFFF,
-    uiMode = Configuration.UI_MODE_TYPE_NORMAL)
+    uiMode = Configuration.UI_MODE_TYPE_NORMAL, device = Devices.DEFAULT, heightDp = 200)
 @Composable
 fun BodyContentCustomLayout(modifier: Modifier = Modifier) {
     MyOwnColumn(modifier.padding(8.dp)) {
@@ -105,18 +106,18 @@ fun MyOwnColumn(
             measurable.measure(constraints)
         }
 
-        // Track the y co-ord we have placed children up to
+        // Track the y coord we have placed children up to
         var yPosition = 0
 
         // Set the size of the layout as big as it can
         layout(constraints.maxWidth, constraints.maxHeight) {
             // Place children in the parent layout
-            placeables.forEach { placeable ->
+            placeables.forEachIndexed { i, placeable ->
                 // Position item on the screen
                 placeable.placeRelative(x = 0, y = yPosition)
 
                 // Record the y co-ord placed up to
-                yPosition += placeable.height
+                yPosition += placeable.height / (2*(i+1))
             }
         }
     }
